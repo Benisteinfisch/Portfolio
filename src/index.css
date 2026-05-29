@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Barrierefreiheit: Animationen für Nutzer mit "Bewegung reduzieren" deaktivieren */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer base {
+  :root {
+    --nordic-bg: #EFECE3;            /* Warmer, softer cream — less glaring */
+    --nordic-surface: #F5F2EA;       /* Subtle elevation for cards/sections */
+    --nordic-text: #262320;          /* Warm near-black, slightly softer */
+    --nordic-muted: #5C574E;         /* Warm muted gray */
+    --nordic-accent: #4a6b4a;
+    --nordic-accent-hover: #344d34;
+    --glass-bg: rgba(245, 242, 234, 0.72);
+    --glass-bg-hover: rgba(248, 245, 238, 0.92);
+    --border-color: rgba(38, 35, 32, 0.08);
+    --accent-light: rgba(74, 107, 74, 0.08);
+  }
+
+  /* If the system prefers dark AND the user hasn't explicitly set light theme */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+      --nordic-bg: #141412;          /* Warm dark gray */
+      --nordic-surface: #1C1C1A;
+      --nordic-text: #F1EFEA;        /* Soft cream white */
+      --nordic-muted: #9E9E96;       /* Muted warm gray */
+      --nordic-accent: #8db58d;      /* Brighter sage green for accessibility */
+      --nordic-accent-hover: #a3c4a3;
+      --glass-bg: rgba(26, 26, 24, 0.65);
+      --glass-bg-hover: rgba(34, 34, 32, 0.9);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-light: rgba(141, 181, 141, 0.12);
+    }
+  }
+
+  /* Manual light mode override */
+  html.light {
+    --nordic-bg: #EFECE3;
+    --nordic-surface: #F5F2EA;
+    --nordic-text: #262320;
+    --nordic-muted: #5C574E;
+    --nordic-accent: #4a6b4a;
+    --nordic-accent-hover: #344d34;
+    --glass-bg: rgba(245, 242, 234, 0.72);
+    --glass-bg-hover: rgba(248, 245, 238, 0.92);
+    --border-color: rgba(38, 35, 32, 0.08);
+    --accent-light: rgba(74, 107, 74, 0.08);
+  }
+
+  /* Manual dark mode override */
+  html.dark {
+    --nordic-bg: #141412;
+    --nordic-surface: #1C1C1A;
+    --nordic-text: #F1EFEA;
+    --nordic-muted: #9E9E96;
+    --nordic-accent: #8db58d;
+    --nordic-accent-hover: #a3c4a3;
+    --glass-bg: rgba(26, 26, 24, 0.65);
+    --glass-bg-hover: rgba(34, 34, 32, 0.9);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --accent-light: rgba(141, 181, 141, 0.12);
+  }
+
+  body {
+    @apply bg-nordic-bg text-nordic-text font-sans antialiased transition-colors duration-300;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight text-nordic-text transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply max-w-5xl mx-auto px-6 py-20;
+  }
+  
+  .glass-card {
+    @apply bg-glass-bg backdrop-blur-md border border-border-color rounded-2xl p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:bg-glass-bg-hover;
+  }
+}
+
+/* Custom styles for professional timelines and visual features */
+.timeline-dot::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--nordic-accent);
+}

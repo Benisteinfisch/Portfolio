@@ -1,0 +1,208 @@
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Mail, Linkedin, ExternalLink, Send, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { fadeUp, stagger } from '../lib/animations';
+import { useLanguage } from '../lib/i18n';
+
+type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
+
+export function ContactSection() {
+  const { t } = useLanguage();
+  const [formState, setFormState] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState<SubmitState>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const accessKey = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!accessKey) {
+      setStatus('error');
+      setErrorMessage(t.contact.errorNotConfigured);
+      return;
+    }
+
+    setStatus('submitting');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formState.name,
+          email: formState.email,
+          message: formState.message,
+          subject: `Portfolio inquiry from ${formState.name}`,
+          from_name: 'Portfolio Website',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setStatus('success');
+        setFormState({ name: '', email: '', message: '' });
+        setTimeout(() => setStatus('idle'), 8000);
+      } else {
+        setStatus('error');
+        setErrorMessage(data.message ?? t.contact.errorNetwork);
+      }
+    } catch {
+      setStatus('error');
+      setErrorMessage(t.contact.errorNetwork);
+    }
+  };
+
+  const isSubmitting = status === 'submitting';
+
+  return (
+    <section id="kontakt" className="bg-nordic-bg py-24 transition-colors duration-300">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="grid md:grid-cols-12 gap-12 items-start">
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            variants={stagger}
+            className="md:col-span-5 space-y-8"
+          >
+            <div>
+              <motion.span variants={fadeUp} className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4 block">
+                {t.contact.badge}
+              </motion.span>
+              <motion.h3 variants={fadeUp} className="text-3xl md:text-5xl font-serif leading-tight">
+                {t.contact.title}
+              </motion.h3>
+              <motion.p variants={fadeUp} className="text-nordic-muted mt-4 font-light text-sm md:text-base leading-relaxed">
+                {t.contact.description}
+              </motion.p>
+            </div>
+
+            <motion.div variants={stagger} className="space-y-4 text-sm md:text-base">
+              <motion.a
+                variants={fadeUp}
+                href="mailto:Ben@Adamo.de"
+                className="flex items-center gap-4 text-nordic-muted hover:text-nordic-text transition-colors p-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5"
+              >
+                <div className="w-10 h-10 rounded-full bg-accent-light flex items-center justify-center text-nordic-accent shrink-0">
+                  <Mail size={18} />
+                </div>
+                <div>
+                  <div className="text-xs uppercase font-bold text-nordic-muted">{t.contact.emailLabel}</div>
+                  <div className="font-semibold text-nordic-text">Ben@Adamo.de</div>
+                </div>
+              </motion.a>
+
+              <motion.a
+                variants={fadeUp}
+                href="https://www.linkedin.com/in/ben-adamo-509b441bb/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 text-nordic-muted hover:text-nordic-text transition-colors p-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5"
+              >
+                <div className="w-10 h-10 rounded-full bg-accent-light flex items-center justify-center text-nordic-accent shrink-0">
+                  <Linkedin size={18} />
+                </div>
+                <div>
+                  <div className="text-xs uppercase font-bold text-nordic-muted">{t.contact.linkedinLabel}</div>
+                  <div className="font-semibold text-nordic-text flex items-center gap-1">
+                    Ben Adamo <ExternalLink size={12} />
+                  </div>
+                </div>
+              </motion.a>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="md:col-span-7 bg-nordic-surface dark:bg-zinc-900/40 p-8 md:p-10 rounded-2xl border border-border-color shadow-sm"
+          >
+            <h4 className="font-serif font-bold text-2xl text-nordic-text mb-6">{t.contact.formTitle}</h4>
+
+            <form onSubmit={handleFormSubmit} className="space-y-5">
+              <div>
+                <label htmlFor="name" className="block text-xs uppercase font-semibold text-nordic-muted mb-2">{t.contact.nameLabel}</label>
+                <input
+                  type="text"
+                  id="name"
+                  required
+                  disabled={isSubmitting}
+                  value={formState.name}
+                  onChange={e => setFormState({ ...formState, name: e.target.value })}
+                  placeholder={t.contact.namePlaceholder}
+                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent transition-colors duration-300 disabled:opacity-60"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-xs uppercase font-semibold text-nordic-muted mb-2">{t.contact.emailFieldLabel}</label>
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  disabled={isSubmitting}
+                  value={formState.email}
+                  onChange={e => setFormState({ ...formState, email: e.target.value })}
+                  placeholder={t.contact.emailPlaceholder}
+                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent transition-colors duration-300 disabled:opacity-60"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-xs uppercase font-semibold text-nordic-muted mb-2">{t.contact.messageLabel}</label>
+                <textarea
+                  id="message"
+                  required
+                  rows={4}
+                  disabled={isSubmitting}
+                  value={formState.message}
+                  onChange={e => setFormState({ ...formState, message: e.target.value })}
+                  placeholder={t.contact.messagePlaceholder}
+                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent transition-colors duration-300 resize-none disabled:opacity-60"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting || status === 'success'}
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-nordic-accent hover:bg-nordic-accent-hover disabled:bg-nordic-accent/55 text-white text-sm font-semibold transition-all shadow-sm"
+              >
+                {isSubmitting ? t.contact.submitting : status === 'success' ? t.contact.submitted : <><span>{t.contact.submit}</span><Send size={15} /></>}
+              </button>
+
+              {status === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-start gap-2 text-xs text-nordic-accent bg-accent-light p-3 rounded-xl border border-nordic-accent/20 font-medium"
+                >
+                  <CheckCircle2 size={14} className="shrink-0 mt-0.5" />
+                  <span>{t.contact.successMessage}</span>
+                </motion.div>
+              )}
+
+              {status === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-start gap-2 text-xs text-rose-700 dark:text-rose-300 bg-rose-500/10 p-3 rounded-xl border border-rose-500/20 font-medium"
+                >
+                  <AlertCircle size={14} className="shrink-0 mt-0.5" />
+                  <span>{errorMessage}</span>
+                </motion.div>
+              )}
+            </form>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
