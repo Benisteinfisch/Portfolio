@@ -46,8 +46,6 @@ const content = {
           'Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.',
       },
     ],
-    disclaimer:
-      'Bitte vor dem öffentlichen Live-Gang rechtlich prüfen und ggf. um Berufsbezeichnung und zuständige Aufsichtsbehörde ergänzen.',
   },
   en: {
     badge: 'Legal',
@@ -87,8 +85,6 @@ const content = {
           'The content and works on these pages created by the site operator are subject to German copyright law. Reproduction, modification, distribution and any kind of exploitation outside the limits of copyright require the written consent of the respective author or creator.',
       },
     ],
-    disclaimer:
-      'Please have this reviewed legally and add a professional designation and supervisory authority where applicable before going live.',
   },
 };
 
@@ -134,8 +130,6 @@ export function Impressum({ onBack }: LegalPageProps) {
               <p className="text-nordic-muted leading-relaxed">{section.body}</p>
             </section>
           ))}
-
-          <p className="text-xs text-nordic-muted italic">{c.disclaimer}</p>
         </motion.article>
       </div>
     </main>

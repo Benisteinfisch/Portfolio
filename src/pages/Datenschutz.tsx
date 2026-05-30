@@ -19,6 +19,9 @@ const content = {
           <>
             Verantwortlich für die Datenverarbeitung auf dieser Website ist:<br />
             Ben-Vincent Emilio Adamo<br />
+            Mutzenreisstraße 140<br />
+            73734 Esslingen am Neckar<br />
+            Deutschland<br />
             E-Mail: <a className="text-nordic-accent hover:underline" href="mailto:Ben@Adamo.de">Ben@Adamo.de</a>
           </>
         ),
@@ -26,12 +29,12 @@ const content = {
       {
         h: '2. Zugriffsdaten und Hosting',
         body:
-          'Beim Aufruf dieser Website werden durch den Hosting-Provider technisch notwendige Zugriffsdaten (IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, Browser-Typ, Betriebssystem) in sogenannten Server-Logfiles verarbeitet. Diese dienen der Bereitstellung und Sicherheit der Seite und werden nach Ablauf der gesetzlichen Aufbewahrungsfristen gelöscht.',
+          'Diese Website wird bei der ALL-INKL.COM – Neue Medien Münnich (Inh. René Münnich, Hauptstraße 68, 02742 Friedersdorf) gehostet. Beim Aufruf der Seite werden durch den Hosting-Provider technisch notwendige Zugriffsdaten (IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, Browser-Typ, Betriebssystem) in sogenannten Server-Logfiles verarbeitet. Rechtsgrundlage ist das berechtigte Interesse an einer sicheren und stabilen Bereitstellung der Website (Art. 6 Abs. 1 lit. f DSGVO). Diese Daten werden nach Ablauf der gesetzlichen Aufbewahrungsfristen gelöscht.',
       },
       {
         h: '3. Kontaktformular',
         body:
-          'Wenn Sie das Kontaktformular nutzen, werden Ihr Name, Ihre E-Mail-Adresse und der Nachrichteninhalt ausschließlich zur Bearbeitung Ihrer Anfrage verarbeitet (Art. 6 Abs. 1 lit. b DSGVO). Die Übertragung erfolgt über den Dienst Web3Forms (Web3Forms LLC, USA). Daten werden nach abschließender Bearbeitung gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.',
+          'Wenn Sie das Kontaktformular nutzen, werden Ihr Name, Ihre E-Mail-Adresse und der Nachrichteninhalt ausschließlich zur Bearbeitung Ihrer Anfrage verarbeitet (Art. 6 Abs. 1 lit. b DSGVO). Die Übertragung erfolgt über den Dienst Web3Forms (Web3Forms LLC, USA); dabei werden die genannten Daten in die USA übertragen. Mit dem Absenden des Formulars willigen Sie in diese Übermittlung ein (Art. 49 Abs. 1 lit. a DSGVO). Die Daten werden nach abschließender Bearbeitung gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.',
       },
       {
         h: '4. Eingebundene Schriftarten',
@@ -49,8 +52,6 @@ const content = {
           'Sie haben jederzeit das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) sowie auf Widerspruch gegen die Verarbeitung (Art. 21 DSGVO). Sie können sich außerdem bei einer Aufsichtsbehörde beschweren (Art. 77 DSGVO).',
       },
     ],
-    disclaimer:
-      'Dies ist eine Boilerplate-Datenschutzerklärung. Bitte vor dem Live-Gang juristisch prüfen und an den tatsächlich eingesetzten Hosting-Anbieter sowie ggf. weitere Dienste anpassen.',
   },
   en: {
     badge: 'Legal',
@@ -63,6 +64,9 @@ const content = {
           <>
             Controller for the data processing on this website is:<br />
             Ben-Vincent Emilio Adamo<br />
+            Mutzenreisstraße 140<br />
+            73734 Esslingen am Neckar<br />
+            Germany<br />
             Email: <a className="text-nordic-accent hover:underline" href="mailto:Ben@Adamo.de">Ben@Adamo.de</a>
           </>
         ),
@@ -70,12 +74,12 @@ const content = {
       {
         h: '2. Access data and hosting',
         body:
-          'When you visit this website, the hosting provider processes technically necessary access data (IP address, date and time of access, page requested, browser type, operating system) in so-called server log files. They serve to provide and secure the site and are deleted after the statutory retention periods expire.',
+          'This website is hosted by ALL-INKL.COM – Neue Medien Münnich (owner: René Münnich, Hauptstraße 68, 02742 Friedersdorf, Germany). When you visit the site, the hosting provider processes technically necessary access data (IP address, date and time of access, page requested, browser type, operating system) in so-called server log files. The legal basis is the legitimate interest in providing the website securely and reliably (Art. 6 (1)(f) GDPR). This data is deleted after the statutory retention periods expire.',
       },
       {
         h: '3. Contact form',
         body:
-          'If you use the contact form, your name, email address and message are processed solely to handle your enquiry (Art. 6 (1)(b) GDPR). Transmission is handled via Web3Forms (Web3Forms LLC, USA). Data is deleted after final processing unless statutory retention obligations apply.',
+          'If you use the contact form, your name, email address and message are processed solely to handle your enquiry (Art. 6 (1)(b) GDPR). Transmission is handled via Web3Forms (Web3Forms LLC, USA); in doing so, the aforementioned data is transferred to the USA. By submitting the form you consent to this transfer (Art. 49 (1)(a) GDPR). Data is deleted after final processing unless statutory retention obligations apply.',
       },
       {
         h: '4. Embedded fonts',
@@ -93,8 +97,6 @@ const content = {
           'You have the right at any time to access (Art. 15), rectify (Art. 16), erase (Art. 17), restrict processing (Art. 18), data portability (Art. 20) and to object to processing (Art. 21 GDPR). You can also lodge a complaint with a supervisory authority (Art. 77 GDPR).',
       },
     ],
-    disclaimer:
-      'This is a boilerplate privacy policy. Please have it reviewed legally and adapt it to your actual hosting provider and any other services in use before going live.',
   },
 };
 
@@ -140,8 +142,6 @@ export function Datenschutz({ onBack }: LegalPageProps) {
               <p className="text-nordic-muted leading-relaxed">{section.body}</p>
             </section>
           ))}
-
-          <p className="text-xs text-nordic-muted italic">{c.disclaimer}</p>
         </motion.article>
       </div>
     </main>
