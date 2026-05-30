@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, useScroll } from 'framer-motion';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
@@ -9,9 +9,11 @@ import { ProjectsSection } from './components/ProjectsSection';
 import { CertsSection } from './components/CertsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { Impressum } from './pages/Impressum';
-import { Datenschutz } from './pages/Datenschutz';
 import './index.css';
+
+// Rechtliche Seiten werden nur bei Bedarf (eigene Routes) geladen -> kleineres Haupt-Bundle.
+const Impressum = lazy(() => import('./pages/Impressum').then(m => ({ default: m.Impressum })));
+const Datenschutz = lazy(() => import('./pages/Datenschutz').then(m => ({ default: m.Datenschutz })));
 
 type Theme = 'light' | 'dark' | 'system';
 type View = 'main' | 'impressum' | 'datenschutz';
@@ -84,8 +86,13 @@ function App() {
     setView('main');
   };
 
-  if (view === 'impressum') return <Impressum onBack={navigateBack} />;
-  if (view === 'datenschutz') return <Datenschutz onBack={navigateBack} />;
+  if (view === 'impressum' || view === 'datenschutz') {
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-nordic-bg transition-colors duration-300" />}>
+        {view === 'impressum' ? <Impressum onBack={navigateBack} /> : <Datenschutz onBack={navigateBack} />}
+      </Suspense>
+    );
+  }
 
   return (
     <div className="min-h-screen overflow-x-hidden selection:bg-nordic-accent selection:text-white transition-colors duration-300">
