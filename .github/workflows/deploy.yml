@@ -1,0 +1,41 @@
+name: Build & Deploy
+
+# Bei jedem Push auf main: bauen und per FTP zu All-Inkl hochladen.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Build
+        env:
+          # Web3Forms-Key wird zur Build-Zeit ins Bundle eingebaut (Client-seitig).
+          # Als GitHub-Secret hinterlegen: Settings → Secrets and variables → Actions.
+          VITE_WEB3FORMS_KEY: ${{ secrets.VITE_WEB3FORMS_KEY }}
+        run: npm run build
+
+      - name: Per FTP zu All-Inkl deployen
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}        # z.B. ftp.adamo.de
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          # Zielordner auf dem Webspace, der unter adamo.de/ben-vincent/ liegt.
+          # Genauen Pfad als Secret setzen, z.B. /ben-vincent/ oder /htdocs/ben-vincent/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}

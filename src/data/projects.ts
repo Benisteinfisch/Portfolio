@@ -11,6 +11,8 @@ export interface Project {
   category: ProjectCategory;
   status: ProjectStatus;
   highlights: Bilingual<string[]>;
+  /** Optionaler direkter Link zum öffentlichen Quellcode (nur bei eigenen, veröffentlichbaren Projekten setzen). */
+  repoUrl?: string;
 }
 
 export const projects: Project[] = [
@@ -103,6 +105,7 @@ export const projects: Project[] = [
         'Performant scroll and filter animations using Framer Motion',
       ],
     },
+    repoUrl: 'https://github.com/Benisteinfisch/Portfolio',
   },
   {
     id: 2,

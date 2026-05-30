@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, ChevronDown } from 'lucide-react';
+import { CheckCircle2, ChevronDown, Github } from 'lucide-react';
 import { fadeUp, stagger } from '../lib/animations';
 import { projects, type ProjectCategory } from '../data/projects';
 import { useLanguage } from '../lib/i18n';
@@ -164,6 +164,19 @@ export function ProjectsSection() {
                             </span>
                           ))}
                         </div>
+
+                        {project.repoUrl && (
+                          <a
+                            href={project.repoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="self-start inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-nordic-text text-nordic-bg hover:bg-nordic-accent hover:text-white transition-colors duration-300"
+                          >
+                            <Github size={14} />
+                            {language === 'de' ? 'Quellcode auf GitHub' : 'Source code on GitHub'}
+                          </a>
+                        )}
                       </motion.div>
                     )}
                   </AnimatePresence>

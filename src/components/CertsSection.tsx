@@ -20,7 +20,7 @@ export function CertsSection() {
           <motion.span variants={fadeUp} className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4 block">
             {t.certs.badge}
           </motion.span>
-          <motion.h3 variants={fadeUp} className="text-3xl md:text-5xl font-serif leading-tight">
+          <motion.h3 variants={fadeUp} className="text-3xl md:text-5xl font-serif leading-tight text-white">
             {t.certs.title}
           </motion.h3>
         </motion.div>

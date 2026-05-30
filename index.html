@@ -2,6 +2,8 @@
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
+    <!-- Theme vor dem ersten Paint setzen (verhindert Aufblitzen / FOUC). CSP-Hash steht in .htaccess. -->
+    <script>(function(){try{var t=localStorage.getItem('theme')||'system';var d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.add(d?'dark':'light')}catch(e){document.documentElement.classList.add('light')}})();</script>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
