@@ -29,7 +29,7 @@ const content = {
       {
         h: '2. Zugriffsdaten und Hosting',
         body:
-          'Diese Website wird bei der ALL-INKL.COM – Neue Medien Münnich (Inh. René Münnich, Hauptstraße 68, 02742 Friedersdorf) gehostet. Beim Aufruf der Seite werden durch den Hosting-Provider technisch notwendige Zugriffsdaten (IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, Browser-Typ, Betriebssystem) in sogenannten Server-Logfiles verarbeitet. Rechtsgrundlage ist das berechtigte Interesse an einer sicheren und stabilen Bereitstellung der Website (Art. 6 Abs. 1 lit. f DSGVO). Diese Daten werden nach Ablauf der gesetzlichen Aufbewahrungsfristen gelöscht.',
+          'Diese Website wird bei einem externen Hosting-Anbieter gehostet. Beim Aufruf der Seite werden technisch notwendige Zugriffsdaten (IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, Browser-Typ, Betriebssystem) in sogenannten Server-Logfiles verarbeitet. Rechtsgrundlage ist das berechtigte Interesse an einer sicheren und stabilen Bereitstellung der Website (Art. 6 Abs. 1 lit. f DSGVO). Diese Daten werden nach Ablauf der gesetzlichen Aufbewahrungsfristen gelöscht.',
       },
       {
         h: '3. Kontaktformular',
@@ -74,7 +74,7 @@ const content = {
       {
         h: '2. Access data and hosting',
         body:
-          'This website is hosted by ALL-INKL.COM – Neue Medien Münnich (owner: René Münnich, Hauptstraße 68, 02742 Friedersdorf, Germany). When you visit the site, the hosting provider processes technically necessary access data (IP address, date and time of access, page requested, browser type, operating system) in so-called server log files. The legal basis is the legitimate interest in providing the website securely and reliably (Art. 6 (1)(f) GDPR). This data is deleted after the statutory retention periods expire.',
+          'This website is hosted by an external hosting provider. When you visit the site, technically necessary access data (IP address, date and time of access, page requested, browser type, operating system) is processed in so-called server log files. The legal basis is the legitimate interest in providing the website securely and reliably (Art. 6 (1)(f) GDPR). This data is deleted after the statutory retention periods expire.',
       },
       {
         h: '3. Contact form',
