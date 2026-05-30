@@ -3,7 +3,7 @@
 Persönliches Portfolio / Online-CV. Zweisprachig (DE/EN), Dark- & Light-Mode,
 Fokus auf Performance, Barrierefreiheit und Datenschutz.
 
-**Live:** https://adamo.de/ben-vincent/
+**Live:** https://benisteinfisch.github.io/Portfolio/
 
 ## Tech-Stack
 
