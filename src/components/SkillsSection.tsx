@@ -19,7 +19,7 @@ interface ProficiencyDotsProps {
 
 function ProficiencyDots({ level }: ProficiencyDotsProps) {
   return (
-    <div className="flex items-center gap-1 shrink-0" aria-label={`Level ${level} of 5`}>
+    <div className="flex items-center gap-1 shrink-0" role="img" aria-label={`Level ${level} of 5`}>
       {[1, 2, 3, 4, 5].map(i => (
         <span
           key={i}

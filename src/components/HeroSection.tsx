@@ -105,7 +105,7 @@ export function HeroSection() {
           <motion.div variants={fadeUp} className="mt-10 flex justify-center">
             <a
               href="#kontakt"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-nordic-accent hover:bg-nordic-accent-hover text-white text-sm font-medium transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-nordic-accent hover:bg-nordic-accent-hover text-white dark:text-nordic-bg text-sm font-medium transition-colors shadow-sm"
             >
               {t.hero.ctaContact} <ArrowRight size={16} />
             </a>
@@ -113,7 +113,11 @@ export function HeroSection() {
         </motion.div>
 
         <div className="flex justify-center w-full">
-          <a href="#fundament" className="animate-bounce mt-16 text-nordic-muted hover:text-nordic-text transition-colors">
+          <a
+            href="#fundament"
+            aria-label={language === 'de' ? 'Nach unten scrollen' : 'Scroll down'}
+            className="animate-bounce mt-16 text-nordic-muted hover:text-nordic-text transition-colors"
+          >
             <ChevronDown size={24} />
           </a>
         </div>

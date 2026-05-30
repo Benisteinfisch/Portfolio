@@ -99,7 +99,7 @@ export function ProjectsSection() {
             {filtered.map(project => {
               const isExpanded = expandedIds.has(project.id);
               return (
-                <motion.article
+                <motion.div
                   key={project.id}
                   layout
                   initial={{ opacity: 0, y: 20 }}
@@ -188,7 +188,7 @@ export function ProjectsSection() {
                       className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
                     />
                   </div>
-                </motion.article>
+                </motion.div>
               );
             })}
           </AnimatePresence>
