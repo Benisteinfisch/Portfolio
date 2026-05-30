@@ -1,0 +1,6 @@
+# security.txt nach RFC 9116 – Kontakt für sicherheitsrelevante Meldungen.
+# Bitte verantwortungsvoll offenlegen (Responsible Disclosure).
+Contact: mailto:Ben@Adamo.de
+Expires: 2027-05-30T00:00:00.000Z
+Preferred-Languages: de, en
+Canonical: https://adamo.de/ben-vincent/.well-known/security.txt

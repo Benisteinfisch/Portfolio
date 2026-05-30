@@ -1,0 +1,37 @@
+# ============================================================
+#  Security-Header
+# ============================================================
+<IfModule mod_headers.c>
+  # Browser darf Dateitypen nicht "erraten"
+  Header always set X-Content-Type-Options "nosniff"
+  # Schutz gegen Clickjacking (Seite nicht in fremde Frames einbettbar)
+  Header always set X-Frame-Options "SAMEORIGIN"
+  # Referrer nur sparsam weitergeben
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  # Nicht benötigte Browser-Features deaktivieren
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  # Content-Security-Policy: nur eigene Ressourcen + Web3Forms-API fürs Kontaktformular.
+  # Der sha256-Hash erlaubt genau das Anti-FOUC-Theme-Script im <head> (siehe index.html); ändert sich das Script, muss der Hash neu berechnet werden.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-Zx5pO/OSOb+ZlNTTsIIRSerAh3lrn/NJKAeqNAhIwhg='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.web3forms.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https://api.web3forms.com"
+</IfModule>
+
+# ============================================================
+#  Kompression
+# ============================================================
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json image/svg+xml application/manifest+json
+</IfModule>
+
+# ============================================================
+#  Caching (gehashte Assets lange, HTML nie cachen)
+# ============================================================
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
