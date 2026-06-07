@@ -22,12 +22,12 @@ export function FoundationSection() {
           variants={stagger}
           className="mb-16 text-center md:text-left"
         >
-          <motion.h2 variants={fadeUp} className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4">
+          <motion.p variants={fadeUp} className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4 font-sans">
             {t.foundation.badge}
-          </motion.h2>
-          <motion.h3 variants={fadeUp} className="text-3xl md:text-5xl font-serif max-w-3xl leading-tight">
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-serif max-w-3xl leading-tight">
             {t.foundation.title}
-          </motion.h3>
+          </motion.h2>
           <motion.p variants={fadeUp} className="text-nordic-muted mt-4 max-w-2xl font-light">
             {t.foundation.description}
           </motion.p>

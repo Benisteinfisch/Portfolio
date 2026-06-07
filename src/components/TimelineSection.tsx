@@ -31,8 +31,8 @@ export function TimelineSection() {
       >
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <h2 className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4">{t.timeline.badge}</h2>
-            <h3 className="text-3xl md:text-5xl font-serif">{t.timeline.title}</h3>
+            <p className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4 font-sans">{t.timeline.badge}</p>
+            <h2 className="text-3xl md:text-5xl font-serif">{t.timeline.title}</h2>
           </div>
 
           <div className="flex bg-black/5 dark:bg-white/5 p-1 rounded-full border border-border-color w-fit">

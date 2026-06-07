@@ -48,9 +48,9 @@ export function SkillsSection() {
           <motion.span variants={fadeUp} className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4 block">
             {t.skills.badge}
           </motion.span>
-          <motion.h3 variants={fadeUp} className="text-3xl md:text-5xl font-serif max-w-3xl mx-auto leading-tight">
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-serif max-w-3xl mx-auto leading-tight">
             {t.skills.title}
-          </motion.h3>
+          </motion.h2>
           <motion.p variants={fadeUp} className="text-nordic-muted mt-4 max-w-xl mx-auto font-light">
             {t.skills.description}
           </motion.p>

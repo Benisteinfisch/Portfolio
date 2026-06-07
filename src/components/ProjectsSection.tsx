@@ -70,8 +70,8 @@ export function ProjectsSection() {
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
         >
           <div>
-            <h2 className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4">{t.projects.badge}</h2>
-            <h3 className="text-3xl md:text-5xl font-serif">{t.projects.title}</h3>
+            <p className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4 font-sans">{t.projects.badge}</p>
+            <h2 className="text-3xl md:text-5xl font-serif">{t.projects.title}</h2>
             <p className="text-nordic-muted mt-3 max-w-xl font-light text-sm md:text-base">
               {t.projects.description}
             </p>

@@ -13,13 +13,16 @@ import '@fontsource/playfair-display/700.css'
 import '@fontsource/playfair-display/500-italic.css'
 import App from './App.tsx'
 import { LanguageProvider } from './lib/i18n'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <MotionConfig reducedMotion="user">
       <LanguageProvider>
-        <App />
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
       </LanguageProvider>
     </MotionConfig>
   </React.StrictMode>,

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon, Monitor, Menu, X } from 'lucide-react';
 import { useLanguage } from '../lib/i18n';
@@ -14,6 +14,14 @@ export function Header({ theme, setTheme }: HeaderProps) {
   const { language, setLanguage, t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, []);
+
   const navLinks = [
     { href: '#profil', label: t.nav.profil },
     { href: '#fundament', label: t.nav.fundament },
@@ -27,7 +35,7 @@ export function Header({ theme, setTheme }: HeaderProps) {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-glass-bg backdrop-blur-md border-b border-border-color transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-4">
-        <a href="#" className="font-serif font-bold text-base md:text-xl tracking-tight text-nordic-text shrink-0">
+        <a href="#" aria-label={language === 'de' ? 'Zur Startseite' : 'Back to top'} className="font-serif font-bold text-base md:text-xl tracking-tight text-nordic-text shrink-0">
           Ben-Vincent Emilio Adamo
         </a>
 
@@ -95,7 +103,9 @@ export function Header({ theme, setTheme }: HeaderProps) {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 text-nordic-text hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-            aria-label="Menu"
+            aria-label={isMobileMenuOpen ? (language === 'de' ? 'Menü schließen' : 'Close menu') : (language === 'de' ? 'Menü öffnen' : 'Open menu')}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -105,6 +115,7 @@ export function Header({ theme, setTheme }: HeaderProps) {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}

@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowRight, ChevronDown, Briefcase, GraduationCap, Award } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { fadeUp, stagger } from '../lib/animations';
@@ -26,8 +26,10 @@ function StatusRow({ icon, primary, secondary }: StatusRowProps) {
 }
 
 export function HeroSection() {
+  const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const yRaw = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const y = prefersReducedMotion ? '0%' : yRaw;
   const { t, language } = useLanguage();
   const s = t.hero.status;
 

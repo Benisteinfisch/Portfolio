@@ -20,9 +20,9 @@ export function CertsSection() {
           <motion.span variants={fadeUp} className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4 block">
             {t.certs.badge}
           </motion.span>
-          <motion.h3 variants={fadeUp} className="text-3xl md:text-5xl font-serif leading-tight text-nordic-text">
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-serif leading-tight text-nordic-text">
             {t.certs.title}
-          </motion.h3>
+          </motion.h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 border-b border-border-color pb-16 mb-16">

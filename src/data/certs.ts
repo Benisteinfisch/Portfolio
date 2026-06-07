@@ -13,8 +13,8 @@ export const certs: Cert[] = [
     date: '11/2025',
     issuer: 'Cisco Networking Academy',
     desc: {
-      de: 'Netzwerk-Fehlerbehebung und Helpdesk-Support — systematische Diagnose und Behebung von Netzwerkproblemen im Betrieb.',
-      en: 'Network troubleshooting and helpdesk support — systematic diagnosis and resolution of operational network issues.',
+      de: 'Diagnose-Methodik, Helpdesk-Support und Cybersicherheit — Zugriffskontrolle, Firewalls, Antimalware sowie Abwehr von Cyber- und Wireless-Angriffen.',
+      en: 'Diagnostic methodologies, helpdesk support and cybersecurity — access control, firewalls, antimalware, and defence against cyber and wireless attacks.',
     },
   },
   {
@@ -22,8 +22,8 @@ export const certs: Cert[] = [
     date: '11/2025',
     issuer: 'Cisco Networking Academy',
     desc: {
-      de: 'IPv6-Adressierung und Glasfaser-Verkabelung — moderne Netzwerk-Infrastruktur und protokollbasierte Fehlerdiagnose.',
-      en: 'IPv6 addressing and fibre-optic cabling — modern network infrastructure and protocol-based fault diagnosis.',
+      de: 'Physikalische Schicht (Kupfer, Glasfaser), IPv6-Adressierung, Cisco-Router und -Switches sowie systematische Fehlerdiagnose bei Wireless- und Internet-Verbindungen.',
+      en: 'Physical layer (copper, fibre-optic), IPv6 addressing, Cisco routers and switches, and systematic fault diagnosis for wireless and internet connectivity.',
     },
   },
   {
@@ -31,8 +31,8 @@ export const certs: Cert[] = [
     date: '11/2025',
     issuer: 'Cisco Networking Academy',
     desc: {
-      de: 'Zentrale Netzwerkprotokolle (ARP, DHCP) und initiale Einrichtung von Cisco-Routern und -Switches.',
-      en: 'Core networking protocols (ARP, DHCP) and initial configuration of Cisco routers and switches.',
+      de: 'Ethernet-Switching, IPv4/IPv6, ARP, DHCP, DNS, TCP/UDP, Cloud und Erstkonfiguration von Cisco-Routern und -Switches über die IOS CLI.',
+      en: 'Ethernet switching, IPv4/IPv6, ARP, DHCP, DNS, TCP/UDP, cloud and initial configuration of Cisco routers and switches via IOS CLI.',
     },
   },
   {
@@ -40,8 +40,8 @@ export const certs: Cert[] = [
     date: '10/2025',
     issuer: 'Cisco Networking Academy',
     desc: {
-      de: 'Grundlagen von Netzwerkprotokollen (Ethernet, IP, TCP/UDP), Topologien und Verkabelung.',
-      en: 'Fundamentals of network protocols (Ethernet, IP, TCP/UDP), topologies and cabling.',
+      de: 'Netzwerkgrundlagen: OSI-Modell, Ethernet, IPv4/IPv6, Subnetting, NAT, Routing, TCP/UDP, DNS, HTTP und Troubleshooting-Utilities (Ping, Traceroute).',
+      en: 'Networking fundamentals: OSI model, Ethernet, IPv4/IPv6, subnetting, NAT, routing, TCP/UDP, DNS, HTTP and troubleshooting utilities (ping, traceroute).',
     },
   },
 ];

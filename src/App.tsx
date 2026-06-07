@@ -96,6 +96,13 @@ function App() {
 
   return (
     <div className="min-h-screen overflow-x-hidden selection:bg-nordic-accent selection:text-white transition-colors duration-300">
+      <a
+        href="#profil"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-nordic-accent focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold focus:outline-none focus:shadow-lg"
+      >
+        Zum Hauptinhalt springen
+      </a>
+
       <motion.div
         className="fixed top-0 left-0 right-0 z-[100] h-0.5 bg-nordic-accent origin-left"
         style={{ scaleX: scrollYProgress }}

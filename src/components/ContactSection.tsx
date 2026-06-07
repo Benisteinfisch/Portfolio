@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, ExternalLink, Send, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Mail, Linkedin, ExternalLink, Send, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import { fadeUp, stagger } from '../lib/animations';
 import { useLanguage } from '../lib/i18n';
 
@@ -26,6 +26,9 @@ export function ContactSection() {
     setStatus('submitting');
     setErrorMessage('');
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -38,7 +41,9 @@ export function ContactSection() {
           subject: `Portfolio inquiry from ${formState.name}`,
           from_name: 'Portfolio Website',
         }),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
 
       const data = await response.json();
 
@@ -49,10 +54,13 @@ export function ContactSection() {
       } else {
         setStatus('error');
         setErrorMessage(data.message ?? t.contact.errorNetwork);
+        setTimeout(() => setStatus('idle'), 6000);
       }
     } catch {
+      clearTimeout(timeoutId);
       setStatus('error');
       setErrorMessage(t.contact.errorNetwork);
+      setTimeout(() => setStatus('idle'), 6000);
     }
   };
 
@@ -74,9 +82,9 @@ export function ContactSection() {
               <motion.span variants={fadeUp} className="text-sm font-semibold uppercase tracking-widest text-nordic-accent mb-4 block">
                 {t.contact.badge}
               </motion.span>
-              <motion.h3 variants={fadeUp} className="text-3xl md:text-5xl font-serif leading-tight">
+              <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-serif leading-tight">
                 {t.contact.title}
-              </motion.h3>
+              </motion.h2>
               <motion.p variants={fadeUp} className="text-nordic-muted mt-4 font-light text-sm md:text-base leading-relaxed">
                 {t.contact.description}
               </motion.p>
@@ -133,11 +141,12 @@ export function ContactSection() {
                   type="text"
                   id="name"
                   required
+                  maxLength={100}
                   disabled={isSubmitting}
                   value={formState.name}
                   onChange={e => setFormState({ ...formState, name: e.target.value })}
                   placeholder={t.contact.namePlaceholder}
-                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent transition-colors duration-300 disabled:opacity-60"
+                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent focus:ring-2 focus:ring-nordic-accent/30 transition-colors duration-300 disabled:opacity-60"
                 />
               </div>
 
@@ -147,11 +156,12 @@ export function ContactSection() {
                   type="email"
                   id="email"
                   required
+                  maxLength={150}
                   disabled={isSubmitting}
                   value={formState.email}
                   onChange={e => setFormState({ ...formState, email: e.target.value })}
                   placeholder={t.contact.emailPlaceholder}
-                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent transition-colors duration-300 disabled:opacity-60"
+                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent focus:ring-2 focus:ring-nordic-accent/30 transition-colors duration-300 disabled:opacity-60"
                 />
               </div>
 
@@ -161,11 +171,12 @@ export function ContactSection() {
                   id="message"
                   required
                   rows={4}
+                  maxLength={2000}
                   disabled={isSubmitting}
                   value={formState.message}
                   onChange={e => setFormState({ ...formState, message: e.target.value })}
                   placeholder={t.contact.messagePlaceholder}
-                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent transition-colors duration-300 resize-none disabled:opacity-60"
+                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent focus:ring-2 focus:ring-nordic-accent/30 transition-colors duration-300 resize-none disabled:opacity-60"
                 />
               </div>
 
@@ -174,7 +185,12 @@ export function ContactSection() {
                 disabled={isSubmitting || status === 'success'}
                 className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-nordic-accent hover:bg-nordic-accent-hover disabled:bg-nordic-accent/55 text-white text-sm font-semibold transition-all shadow-sm"
               >
-                {isSubmitting ? t.contact.submitting : status === 'success' ? t.contact.submitted : <><span>{t.contact.submit}</span><Send size={15} /></>}
+                {isSubmitting
+                  ? <><Loader2 size={15} className="animate-spin" /><span>{t.contact.submitting}</span></>
+                  : status === 'success'
+                    ? t.contact.submitted
+                    : <><span>{t.contact.submit}</span><Send size={15} /></>
+                }
               </button>
 
               {status === 'success' && (
