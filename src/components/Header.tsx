@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, Monitor, Menu, X } from 'lucide-react';
+import { Sun, Moon, Monitor, Menu, X, Terminal } from 'lucide-react';
 import { useLanguage } from '../lib/i18n';
 
 type Theme = 'light' | 'dark' | 'system';
+type Mode = 'corporate' | 'cyber';
 
 interface HeaderProps {
   theme: Theme;
   setTheme: (t: Theme) => void;
+  mode: Mode;
+  setMode: (m: Mode) => void;
 }
 
-export function Header({ theme, setTheme }: HeaderProps) {
+export function Header({ theme, setTheme, mode, setMode }: HeaderProps) {
   const { language, setLanguage, t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -39,17 +42,19 @@ export function Header({ theme, setTheme }: HeaderProps) {
           Ben-Vincent Emilio Adamo
         </a>
 
-        <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
-          {navLinks.map(link => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-nordic-muted hover:text-nordic-text transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        {mode === 'corporate' && (
+          <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
+            {navLinks.map(link => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-nordic-muted hover:text-nordic-text transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        )}
 
         <div className="flex items-center gap-3">
           {/* Language Toggle */}
@@ -100,20 +105,37 @@ export function Header({ theme, setTheme }: HeaderProps) {
             </button>
           </div>
 
+          {/* Corporate <-> Cyber-Modus */}
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-nordic-text hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-            aria-label={isMobileMenuOpen ? (language === 'de' ? 'Menü schließen' : 'Close menu') : (language === 'de' ? 'Menü öffnen' : 'Open menu')}
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-menu"
+            onClick={() => setMode(mode === 'cyber' ? 'corporate' : 'cyber')}
+            className={`p-2 rounded-full border transition-all ${
+              mode === 'cyber'
+                ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-500'
+                : 'bg-black/5 dark:bg-white/5 border-border-color text-nordic-muted hover:text-nordic-text'
+            }`}
+            title={mode === 'cyber' ? t.terminal.exit : t.terminal.enter}
+            aria-label={mode === 'cyber' ? t.terminal.exit : t.terminal.enter}
+            aria-pressed={mode === 'cyber'}
           >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            <Terminal size={14} />
           </button>
+
+          {mode === 'corporate' && (
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-nordic-text hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+              aria-label={isMobileMenuOpen ? (language === 'de' ? 'Menü schließen' : 'Close menu') : (language === 'de' ? 'Menü öffnen' : 'Open menu')}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
+            >
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          )}
         </div>
       </div>
 
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {mode === 'corporate' && isMobileMenuOpen && (
           <motion.div
             id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}

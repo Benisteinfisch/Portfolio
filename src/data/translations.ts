@@ -124,6 +124,35 @@ export interface UITranslations {
   legal: {
     back: string;
   };
+  terminal: {
+    enter: string;
+    exit: string;
+    boot: string[];
+    welcome: string;
+    hint: string;
+    notFound: string;
+    helpIntro: string;
+    catUsage: string;
+    catNotFound: string;
+    labelStatus: string;
+    labelTech: string;
+    labelHighlights: string;
+    projectsHint: string;
+    contactIntro: string;
+    hireMe: string[];
+    desc: {
+      help: string;
+      whoami: string;
+      skills: string;
+      projects: string;
+      cat: string;
+      career: string;
+      contact: string;
+      social: string;
+      clear: string;
+      corporate: string;
+    };
+  };
 }
 
 const de: UITranslations = {
@@ -276,6 +305,44 @@ const de: UITranslations = {
   legal: {
     back: 'Zurück',
   },
+  terminal: {
+    enter: 'Cyber-Modus (Terminal)',
+    exit: 'Zurück zum Corporate-Modus',
+    boot: [
+      'adamo-sec shell v1.0 — Initialisierung…',
+      'lade Profilmodule … ok',
+      'Authentifizierung: Gast-Zugriff gewährt',
+    ],
+    welcome: 'Willkommen im interaktiven Terminal von Ben-Vincent Adamo.',
+    hint: "Tippe 'help' oder klicke unten einen Befehl an.",
+    notFound: ": Befehl nicht gefunden. Tippe 'help' für eine Übersicht.",
+    helpIntro: 'Verfügbare Befehle:',
+    catUsage: "Verwendung: cat <id> — z. B. 'cat 1'. Mit 'projects' alle IDs anzeigen.",
+    catNotFound: 'Kein Projekt mit dieser ID gefunden.',
+    labelStatus: 'Status',
+    labelTech: 'Tech',
+    labelHighlights: 'Highlights',
+    projectsHint: "→ 'cat <id>' für Details",
+    contactIntro: 'Sichere Verbindung aufgebaut. Hinterlasse eine Nachricht:',
+    hireMe: [
+      '[sudo] Passwort für visitor: ********',
+      'Zugriff gewährt ✓',
+      '> Ben ist offen für Werkstudenten- und Praktikumsangebote im Bereich IT-Security.',
+      "> Tippe 'contact' oder schreib an Ben@Adamo.de.",
+    ],
+    desc: {
+      help: 'diese Übersicht anzeigen',
+      whoami: 'wer ist Ben? Kurzprofil',
+      skills: 'Fähigkeiten & Kompetenzniveau',
+      projects: 'alle Projekte auflisten',
+      cat: 'Projektdetails anzeigen',
+      career: 'Werdegang / Lebenslauf',
+      contact: 'Kontaktformular öffnen',
+      social: 'E-Mail, LinkedIn, GitHub',
+      clear: 'Terminal leeren',
+      corporate: 'zurück zur klassischen Ansicht',
+    },
+  },
 };
 
 const en: UITranslations = {
@@ -427,6 +494,44 @@ const en: UITranslations = {
   },
   legal: {
     back: 'Back',
+  },
+  terminal: {
+    enter: 'Cyber mode (terminal)',
+    exit: 'Back to corporate mode',
+    boot: [
+      'adamo-sec shell v1.0 — initializing…',
+      'loading profile modules … ok',
+      'authentication: guest access granted',
+    ],
+    welcome: "Welcome to Ben-Vincent Adamo's interactive terminal.",
+    hint: "Type 'help' or tap a command below.",
+    notFound: ": command not found. Type 'help' for a list.",
+    helpIntro: 'Available commands:',
+    catUsage: "Usage: cat <id> — e.g. 'cat 1'. Run 'projects' to see all IDs.",
+    catNotFound: 'No project found with that id.',
+    labelStatus: 'Status',
+    labelTech: 'Tech',
+    labelHighlights: 'Highlights',
+    projectsHint: "→ 'cat <id>' for details",
+    contactIntro: 'Secure channel established. Leave a message:',
+    hireMe: [
+      '[sudo] password for visitor: ********',
+      'Access granted ✓',
+      '> Ben is open to working-student and internship roles in IT security.',
+      "> Type 'contact' or email Ben@Adamo.de.",
+    ],
+    desc: {
+      help: 'show this overview',
+      whoami: 'who is Ben? short profile',
+      skills: 'skills & proficiency levels',
+      projects: 'list all projects',
+      cat: 'show project details',
+      career: 'career path / CV',
+      contact: 'open the contact form',
+      social: 'email, LinkedIn, GitHub',
+      clear: 'clear the terminal',
+      corporate: 'return to the classic view',
+    },
   },
 };
 

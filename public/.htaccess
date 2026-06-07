@@ -2,6 +2,9 @@
 #  Security-Header
 # ============================================================
 <IfModule mod_headers.c>
+  # HTTPS verbindlich erzwingen (1 Jahr). Gilt nur fuer adamo.de selbst,
+  # NICHT fuer Subdomains (kein includeSubDomains) -> engster sicherer Scope.
+  Header always set Strict-Transport-Security "max-age=31536000"
   # Browser darf Dateitypen nicht "erraten"
   Header always set X-Content-Type-Options "nosniff"
   # Schutz gegen Clickjacking (Seite nicht in fremde Frames einbettbar)
