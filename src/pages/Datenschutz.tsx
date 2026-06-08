@@ -47,7 +47,12 @@ const content = {
           'Zur Speicherung Ihrer Theme- und Sprach-Präferenzen wird ein Eintrag im localStorage Ihres Browsers angelegt. Es findet keine Übertragung an Dritte statt; Sie können den Eintrag jederzeit in den Browser-Einstellungen löschen.',
       },
       {
-        h: '6. Ihre Rechte',
+        h: '6. KI-Assistent („Ask Ben")',
+        body:
+          'Diese Website bietet einen optionalen KI-Chat-Assistenten an. Wenn Sie eine Nachricht an den Assistenten senden, wird der von Ihnen eingegebene Text zur Erzeugung einer Antwort an Cloudflare Workers AI (Cloudflare, Inc., USA) übermittelt und dort verarbeitet. Es werden ausschließlich die von Ihnen eingegebenen Inhalte übertragen – bitte geben Sie dort keine personenbezogenen oder sensiblen Daten ein. Zur Abwehr von Missbrauch und Überlastung wird Ihre IP-Adresse kurzzeitig verarbeitet (Ratenbegrenzung). Rechtsgrundlage ist das berechtigte Interesse am sicheren Betrieb dieser Funktion (Art. 6 Abs. 1 lit. f DSGVO); für die Übermittlung in die USA stützt sich die Verarbeitung auf Art. 49 Abs. 1 lit. a DSGVO. Die Nutzung des Assistenten ist freiwillig.',
+      },
+      {
+        h: '7. Ihre Rechte',
         body:
           'Sie haben jederzeit das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) sowie auf Widerspruch gegen die Verarbeitung (Art. 21 DSGVO). Sie können sich außerdem bei einer Aufsichtsbehörde beschweren (Art. 77 DSGVO).',
       },
@@ -92,7 +97,12 @@ const content = {
           'To remember your theme and language preferences, an entry is stored in your browser\'s localStorage. No data is transmitted to third parties. You can delete the entry at any time in your browser settings.',
       },
       {
-        h: '6. Your rights',
+        h: '6. AI assistant ("Ask Ben")',
+        body:
+          'This website offers an optional AI chat assistant. When you send a message to the assistant, the text you enter is transmitted to and processed by Cloudflare Workers AI (Cloudflare, Inc., USA) in order to generate a response. Only the content you enter is transmitted — please do not enter any personal or sensitive data there. To prevent abuse and overload, your IP address is processed briefly (rate limiting). The legal basis is the legitimate interest in operating this feature securely (Art. 6 (1)(f) GDPR); for the transfer to the USA, processing is based on Art. 49 (1)(a) GDPR. Use of the assistant is voluntary.',
+      },
+      {
+        h: '7. Your rights',
         body:
           'You have the right at any time to access (Art. 15), rectify (Art. 16), erase (Art. 17), restrict processing (Art. 18), data portability (Art. 20) and to object to processing (Art. 21 GDPR). You can also lodge a complaint with a supervisory authority (Art. 77 GDPR).',
       },

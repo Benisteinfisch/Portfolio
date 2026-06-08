@@ -127,9 +127,9 @@ export function ProjectsSection() {
                     </span>
                   </div>
 
-                  <h4 className="text-xl font-serif font-bold text-nordic-text group-hover:text-nordic-accent transition-colors duration-300">
+                  <h3 className="text-xl font-serif font-bold text-nordic-text group-hover:text-nordic-accent transition-colors duration-300">
                     {project.title[language]}
-                  </h4>
+                  </h3>
 
                   <AnimatePresence initial={false}>
                     {isExpanded && (

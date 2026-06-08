@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Linkedin, ExternalLink, Send, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import { fadeUp, stagger } from '../lib/animations';
@@ -11,6 +11,8 @@ export function ContactSection() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<SubmitState>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  // Honeypot gegen Spam-Bots (uncontrolled -> liest den echten DOM-Wert beim Absenden).
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const accessKey = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
 
@@ -20,6 +22,15 @@ export function ContactSection() {
     if (!accessKey) {
       setStatus('error');
       setErrorMessage(t.contact.errorNotConfigured);
+      return;
+    }
+
+    // Honeypot ausgefuellt -> Bot. Stillschweigend "erfolgreich" tun (nicht verraten),
+    // ohne die Anfrage tatsaechlich zu senden.
+    if (honeypotRef.current?.value) {
+      setStatus('success');
+      setFormState({ name: '', email: '', message: '' });
+      setTimeout(() => setStatus('idle'), 8000);
       return;
     }
 
@@ -40,6 +51,7 @@ export function ContactSection() {
           message: formState.message,
           subject: `Portfolio inquiry from ${formState.name}`,
           from_name: 'Portfolio Website',
+          botcheck: honeypotRef.current?.value || '',
         }),
         signal: controller.signal,
       });
@@ -132,9 +144,21 @@ export function ContactSection() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="md:col-span-7 bg-nordic-surface dark:bg-zinc-900/40 p-8 md:p-10 rounded-2xl border border-border-color shadow-sm"
           >
-            <h4 className="font-serif font-bold text-2xl text-nordic-text mb-6">{t.contact.formTitle}</h4>
+            <h3 className="font-serif font-bold text-2xl text-nordic-text mb-6">{t.contact.formTitle}</h3>
 
             <form onSubmit={handleFormSubmit} className="space-y-5">
+              {/* Honeypot: fuer Menschen unsichtbar (display:none, aria-hidden, nicht fokussierbar).
+                  Bots fuellen es aus -> Absendung wird verworfen. */}
+              <input
+                ref={honeypotRef}
+                type="text"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
+
               <div>
                 <label htmlFor="name" className="block text-xs uppercase font-semibold text-nordic-muted mb-2">{t.contact.nameLabel}</label>
                 <input

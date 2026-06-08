@@ -45,7 +45,7 @@ export function FoundationSection() {
               <div className="w-12 h-12 bg-accent-light rounded-full flex items-center justify-center mb-6 text-nordic-accent">
                 <Briefcase size={20} />
               </div>
-              <h4 className="text-2xl font-serif mb-2 text-nordic-text">{ik.title}</h4>
+              <h3 className="text-2xl font-serif mb-2 text-nordic-text">{ik.title}</h3>
               <div className="text-xs font-semibold text-nordic-accent uppercase tracking-wider mb-4">
                 {ik.employer}
               </div>
@@ -72,7 +72,7 @@ export function FoundationSection() {
               <div className="w-12 h-12 bg-accent-light rounded-full flex items-center justify-center mb-6 text-nordic-accent">
                 <Shield size={20} />
               </div>
-              <h4 className="text-2xl font-serif mb-2 text-nordic-text">{itsec.title}</h4>
+              <h3 className="text-2xl font-serif mb-2 text-nordic-text">{itsec.title}</h3>
               <div className="text-xs font-semibold text-nordic-accent uppercase tracking-wider mb-4">
                 {itsec.institution}
               </div>

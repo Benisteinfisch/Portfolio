@@ -70,9 +70,9 @@ export function SkillsSection() {
                 <div className="w-9 h-9 rounded-full bg-accent-light flex items-center justify-center shrink-0">
                   {iconMap[category.iconKey]}
                 </div>
-                <h4 className="font-serif font-bold text-base md:text-lg text-nordic-text leading-tight">
+                <h3 className="font-serif font-bold text-base md:text-lg text-nordic-text leading-tight">
                   {t.skills.categories[key]}
-                </h4>
+                </h3>
               </div>
 
               <ul className="space-y-3" aria-label={t.skills.levelLabel}>

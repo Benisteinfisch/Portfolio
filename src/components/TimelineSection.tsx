@@ -83,7 +83,7 @@ export function TimelineSection() {
                           <Calendar size={12} />
                           {item.date[language]}
                         </div>
-                        <h4 className="text-lg md:text-xl font-bold text-nordic-text mb-1">{item.title[language]}</h4>
+                        <h3 className="text-lg md:text-xl font-bold text-nordic-text mb-1">{item.title[language]}</h3>
                         <span className="inline-block text-xs font-medium text-nordic-accent bg-accent-light px-2.5 py-1 rounded-full mb-4">
                           {item.institution[language]}
                         </span>

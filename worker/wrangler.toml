@@ -1,0 +1,15 @@
+name = "ask-ben"
+main = "ask-ben.js"
+compatibility_date = "2025-06-01"
+account_id = "f4bfc5edbaee97ad2eda4b36230c915a"
+
+# Workers AI Binding (kostenloses Tageskontingent: 10.000 Neurons/Tag)
+[ai]
+binding = "AI"
+
+# KV fuer Rate-Limiting. Namespace zuerst anlegen:
+#   wrangler kv namespace create RL
+# danach die ausgegebene id hier eintragen:
+[[kv_namespaces]]
+binding = "RL"
+id = "f82d30e4d6df455f8cd178cf8d944f97"
