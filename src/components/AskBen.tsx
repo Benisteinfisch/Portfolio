@@ -168,7 +168,9 @@ export function AskBen() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-24 right-5 z-[55] w-[370px] max-w-[calc(100vw-2.5rem)] h-[540px] max-h-[calc(100vh-9rem)] flex flex-col rounded-2xl border border-border-color bg-nordic-surface shadow-2xl overflow-hidden"
+            className="fixed z-[55] flex flex-col bg-nordic-surface shadow-2xl overflow-hidden
+              inset-0 rounded-none border-0
+              sm:inset-auto sm:bottom-24 sm:right-5 sm:w-[370px] sm:h-[540px] sm:max-h-[calc(100vh-9rem)] sm:rounded-2xl sm:border sm:border-border-color"
           >
             {/* Kopfzeile */}
             <div className="flex items-center gap-3 px-4 py-3 border-b border-border-color bg-nordic-bg/60">
