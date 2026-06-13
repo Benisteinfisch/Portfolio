@@ -41,7 +41,7 @@ export function SkillsSection() {
   const { t, language } = useLanguage();
 
   return (
-    <section id="kompetenzen" className="bg-nordic-surface dark:bg-zinc-900/40 py-24 border-y border-border-color transition-colors duration-300">
+    <section id="kompetenzen" className="matrix-band py-24 border-y border-border-color transition-colors duration-300">
       <div className="section-container">
         <motion.div
           initial="hidden"

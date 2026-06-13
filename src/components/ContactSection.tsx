@@ -79,7 +79,7 @@ export function ContactSection() {
   const isSubmitting = status === 'submitting';
 
   return (
-    <section id="kontakt" className="bg-nordic-bg py-24 transition-colors duration-300">
+    <section id="kontakt" className="py-24 transition-colors duration-300">
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid md:grid-cols-12 gap-12 items-start">
 

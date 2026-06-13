@@ -29,6 +29,15 @@
     --aurora-1: rgba(74, 107, 74, 0.22);
     --aurora-2: rgba(176, 141, 87, 0.16);
     --spotlight: rgba(74, 107, 74, 0.09);
+    /* Energy Matrix (Light — Ceramic & Daylight) */
+    --matrix-plate: #F9FAFB;
+    --matrix-groove: #DAD7CE;
+    --matrix-energy: rgba(74, 107, 74, 0.55);
+    --matrix-energy-mouse: rgba(74, 107, 74, 0.40);
+    --matrix-band: rgba(245, 242, 234, 0.55);
+    --matrix-edge-light: rgba(255, 255, 255, 0.9);
+    --matrix-edge-dark: rgba(38, 35, 32, 0.12);
+    --matrix-accent-rgb: 74, 107, 74;
   }
 
   /* If the system prefers dark AND the user hasn't explicitly set light theme */
@@ -44,6 +53,15 @@
       --glass-bg-hover: rgba(34, 34, 32, 0.9);
       --border-color: rgba(255, 255, 255, 0.08);
       --accent-light: rgba(141, 181, 141, 0.12);
+      /* Energy Matrix (Dark — Obsidian & Neon) */
+      --matrix-plate: #0F0F0E;
+      --matrix-groove: #000000;
+      --matrix-energy: rgba(120, 230, 150, 0.55);
+      --matrix-energy-mouse: rgba(141, 181, 141, 0.45);
+      --matrix-band: rgba(20, 20, 18, 0.55);
+      --matrix-edge-light: rgba(255, 255, 255, 0.07);
+      --matrix-edge-dark: rgba(0, 0, 0, 0.6);
+      --matrix-accent-rgb: 120, 230, 150;
     }
   }
 
@@ -62,6 +80,15 @@
     --aurora-1: rgba(74, 107, 74, 0.22);
     --aurora-2: rgba(176, 141, 87, 0.16);
     --spotlight: rgba(74, 107, 74, 0.09);
+    /* Energy Matrix (Light — Ceramic & Daylight) */
+    --matrix-plate: #F9FAFB;
+    --matrix-groove: #DAD7CE;
+    --matrix-energy: rgba(74, 107, 74, 0.55);
+    --matrix-energy-mouse: rgba(74, 107, 74, 0.40);
+    --matrix-band: rgba(245, 242, 234, 0.55);
+    --matrix-edge-light: rgba(255, 255, 255, 0.9);
+    --matrix-edge-dark: rgba(38, 35, 32, 0.12);
+    --matrix-accent-rgb: 74, 107, 74;
   }
 
   /* Manual dark mode override */
@@ -79,6 +106,15 @@
     --aurora-1: rgba(141, 181, 141, 0.14);
     --aurora-2: rgba(190, 160, 110, 0.09);
     --spotlight: rgba(141, 181, 141, 0.10);
+    /* Energy Matrix (Dark — Obsidian & Neon) */
+    --matrix-plate: #0F0F0E;
+    --matrix-groove: #000000;
+    --matrix-energy: rgba(120, 230, 150, 0.55);
+    --matrix-energy-mouse: rgba(141, 181, 141, 0.45);
+    --matrix-band: rgba(20, 20, 18, 0.55);
+    --matrix-edge-light: rgba(255, 255, 255, 0.07);
+    --matrix-edge-dark: rgba(0, 0, 0, 0.6);
+    --matrix-accent-rgb: 120, 230, 150;
   }
 
   body {
@@ -336,6 +372,56 @@ body.lang-fade {
 }
 .boot-glitch {
   animation: boot-glitch 0.38s steps(6, end) forwards;
+}
+
+/* ============================================================
+   Energy Matrix — "Isometric Cyber-Surface": Der Blick fällt schräg
+   auf eine riesige, gekippte Tech-Oberfläche aus gleich großen, wie
+   CNC-gefrästen Kacheln. Dahinter fließt Energie (Radial-Gradient,
+   folgt der Maus) und bricht durch die hauchdünnen Fugen.
+   Nur die Licht-Layer bewegen sich — die Kacheln sind statisch.
+   ============================================================ */
+.iso-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+/* Große Bühne, orthografisch isometrisch gekippt. Übergroß + zentriert,
+   damit nach Rotation/Scale keine Ränder im Viewport sichtbar werden. */
+.iso-stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180vmax;
+  height: 180vmax;
+  margin-left: -90vmax;
+  margin-top: -90vmax;
+  transform: rotateX(60deg) rotateZ(-45deg) scale(1.5);
+  transform-origin: center center;
+}
+/* Strenges, feines Quadrat-Raster — alle Kacheln exakt gleich groß. */
+.iso-tiles {
+  display: grid;
+  grid-template-columns: repeat(var(--iso-n, 28), 1fr);
+  grid-template-rows: repeat(var(--iso-n, 28), 1fr);
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+}
+/* CNC-Material: heller Inset oben/links, dunkler Schatten unten/rechts. */
+.iso-tile {
+  background-color: var(--matrix-plate);
+  box-shadow:
+    inset 1px 1px 0 var(--matrix-edge-light),
+    inset -1px -1px 2px var(--matrix-edge-dark);
+}
+
+/* Sanftes Band für die früheren „surface"-Sektionen: lässt die Matrix
+   durchscheinen, hält aber den Lesekontrast über Translucency + Blur. */
+.matrix-band {
+  background-color: var(--matrix-band);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 /* Custom styles for professional timelines and visual features */

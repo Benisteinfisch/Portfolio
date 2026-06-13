@@ -69,7 +69,7 @@ export function HeroSection() {
   const nameWords = ['Ben-Vincent', 'Emilio', 'Adamo'];
 
   return (
-    <section id="profil" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 bg-nordic-bg transition-colors duration-300">
+    <section id="profil" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 transition-colors duration-300">
       {/* Aurora: zwei langsam driftende Farbflecken (Keyframes + Farben in index.css) */}
       <motion.div className="absolute inset-0 z-0 pointer-events-none" style={{ y }} aria-hidden="true">
         <div

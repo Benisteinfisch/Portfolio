@@ -19,7 +19,7 @@ export function CertsSection() {
   };
 
   return (
-    <section id="zertifikate" className="bg-nordic-surface py-24 transition-colors duration-300">
+    <section id="zertifikate" className="matrix-band py-24 transition-colors duration-300">
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial="hidden"

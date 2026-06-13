@@ -8,7 +8,7 @@ interface FooterProps {
 export function Footer({ onNavigate }: FooterProps) {
   const { t } = useLanguage();
   return (
-    <footer className="bg-nordic-surface dark:bg-zinc-900 border-t border-border-color py-12 transition-colors duration-300">
+    <footer className="matrix-band border-t border-border-color py-12 transition-colors duration-300">
       <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="font-serif font-bold text-lg text-nordic-text">Ben-Vincent Emilio Adamo</div>
 

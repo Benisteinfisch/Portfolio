@@ -14,7 +14,7 @@ export function FoundationSection() {
   const gradeValues = language === 'de' ? grades : gradesEn;
 
   return (
-    <section id="fundament" className="bg-nordic-surface dark:bg-zinc-900/40 py-24 transition-colors duration-300">
+    <section id="fundament" className="matrix-band py-24 transition-colors duration-300">
       <div className="section-container">
         <motion.div
           initial="hidden"

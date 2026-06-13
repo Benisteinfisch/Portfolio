@@ -14,6 +14,7 @@ import { AskBen } from './components/AskBen';
 import { ScrollTop } from './components/ScrollTop';
 import { useLenis } from './lib/useLenis';
 import { Preloader } from './components/Preloader';
+import { EnergyMatrixBackground } from './components/EnergyMatrixBackground';
 import './index.css';
 
 // Rechtliche Seiten werden nur bei Bedarf (eigene Routes) geladen -> kleineres Haupt-Bundle.
@@ -137,6 +138,7 @@ function App() {
 
   return (
     <div className="min-h-screen overflow-x-hidden selection:bg-nordic-accent selection:text-white transition-colors duration-300">
+      <EnergyMatrixBackground />
       <Preloader />
       <a
         href="#profil"
