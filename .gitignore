@@ -35,3 +35,6 @@ lerna-debug.log*
 # Versehentlich erzeugte TS-Kompilate der Config-Dateien
 vite.config.js
 vite.config.d.ts
+
+# TypeScript-Inkrementalbuild-Cache
+*.tsbuildinfo

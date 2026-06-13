@@ -21,8 +21,13 @@ function ProficiencyDots({ level }: ProficiencyDotsProps) {
   return (
     <div className="flex items-center gap-1 shrink-0" role="img" aria-label={`Level ${level} of 5`}>
       {[1, 2, 3, 4, 5].map(i => (
-        <span
+        // Gefüllte Dots ploppen nacheinander auf, sobald die Zeile sichtbar wird
+        <motion.span
           key={i}
+          initial={i <= level ? { scale: 0 } : false}
+          whileInView={i <= level ? { scale: 1 } : undefined}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ delay: 0.15 + i * 0.07, type: 'spring', stiffness: 400, damping: 18 }}
           className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
             i <= level ? 'bg-nordic-accent' : 'bg-nordic-muted/25'
           }`}

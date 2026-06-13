@@ -26,6 +26,9 @@
     --glass-bg-hover: rgba(248, 245, 238, 0.92);
     --border-color: rgba(38, 35, 32, 0.08);
     --accent-light: rgba(74, 107, 74, 0.08);
+    --aurora-1: rgba(74, 107, 74, 0.22);
+    --aurora-2: rgba(176, 141, 87, 0.16);
+    --spotlight: rgba(74, 107, 74, 0.09);
   }
 
   /* If the system prefers dark AND the user hasn't explicitly set light theme */
@@ -56,6 +59,9 @@
     --glass-bg-hover: rgba(248, 245, 238, 0.92);
     --border-color: rgba(38, 35, 32, 0.08);
     --accent-light: rgba(74, 107, 74, 0.08);
+    --aurora-1: rgba(74, 107, 74, 0.22);
+    --aurora-2: rgba(176, 141, 87, 0.16);
+    --spotlight: rgba(74, 107, 74, 0.09);
   }
 
   /* Manual dark mode override */
@@ -70,6 +76,9 @@
     --glass-bg-hover: rgba(34, 34, 32, 0.9);
     --border-color: rgba(255, 255, 255, 0.08);
     --accent-light: rgba(141, 181, 141, 0.12);
+    --aurora-1: rgba(141, 181, 141, 0.14);
+    --aurora-2: rgba(190, 160, 110, 0.09);
+    --spotlight: rgba(141, 181, 141, 0.10);
   }
 
   body {
@@ -89,6 +98,244 @@
   .glass-card {
     @apply bg-glass-bg backdrop-blur-md border border-border-color rounded-2xl p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:bg-glass-bg-hover;
   }
+}
+
+/* ============================================================
+   Feine Papier-Körnung über der ganzen Seite (nimmt den Flächen
+   die digitale Sterilität). Unter dem Header (z-50) und allen
+   Overlays, damit Modals/Menüs scharf bleiben.
+   ============================================================ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+}
+html.dark body::after {
+  opacity: 0.06;
+}
+
+/* ============================================================
+   Aurora-Hintergrund im Hero: weiche, langsam driftende
+   Farbflecken (Farben pro Theme via --aurora-1/--aurora-2).
+   prefers-reduced-motion wird global oben abgefangen.
+   ============================================================ */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  will-change: transform;
+}
+@keyframes aurora-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(8%, -6%) scale(1.15); }
+  66%      { transform: translate(-6%, 8%) scale(0.95); }
+}
+@keyframes aurora-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%      { transform: translate(-8%, 6%) scale(1.1); }
+  70%      { transform: translate(6%, -8%) scale(0.9); }
+}
+
+/* ============================================================
+   Rotierender Akzent-Bogen um das Hero-Foto.
+   ============================================================ */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.hero-ring {
+  background: conic-gradient(
+    from 0deg,
+    var(--nordic-accent) 0deg,
+    transparent 100deg,
+    transparent 260deg,
+    var(--nordic-accent) 360deg
+  );
+  animation: spin-slow 14s linear infinite;
+  /* Nur ein schmaler Ring bleibt sichtbar, die Mitte wird ausmaskiert */
+  -webkit-mask-image: radial-gradient(closest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+  mask-image: radial-gradient(closest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+}
+
+/* ============================================================
+   Spotlight-Hover: Lichtfleck folgt dem Cursor über die Karte.
+   --spot-x/--spot-y setzt trackSpotlight() (src/lib/spotlight.ts).
+   ============================================================ */
+.spotlight-card {
+  position: relative;
+}
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--spotlight),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* ============================================================
+   Theme-Wechsel als Circular Reveal (View Transitions API).
+   Die Default-Crossfade-Animation wird deaktiviert, der Kreis
+   kommt per Web Animations API aus App.tsx.
+   ============================================================ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* ============================================================
+   Custom Scrollbar in Theme-Farben (Firefox via scrollbar-color,
+   Chromium/Safari via ::-webkit-scrollbar). Farben folgen den
+   CSS-Variablen und wechseln damit automatisch mit dem Theme.
+   ============================================================ */
+html {
+  scrollbar-color: var(--nordic-muted) transparent;
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--nordic-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--nordic-muted);
+  border-radius: 9999px;
+  /* Rand in Hintergrundfarbe lässt den Daumen schmaler und "schwebend" wirken */
+  border: 3px solid var(--nordic-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--nordic-accent);
+}
+
+/* ============================================================
+   Kontaktformular: weicher Akzent-Glow bei Fokus (statt hartem
+   Ring). Farbe via --accent-light -> folgt dem Theme.
+   ============================================================ */
+.input-glow {
+  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+.input-glow:focus {
+  border-color: var(--nordic-accent);
+  box-shadow:
+    0 0 0 3px var(--accent-light),
+    0 0 20px var(--accent-light);
+}
+
+/* ============================================================
+   Sprachwechsel: kurzer Blur-Cross-Fade über die ganze Seite
+   (Klasse wird in src/lib/i18n.tsx gesetzt und wieder entfernt).
+   ============================================================ */
+@keyframes lang-fade {
+  0%   { opacity: 1; filter: blur(0); }
+  30%  { opacity: 0.35; filter: blur(6px); }
+  100% { opacity: 1; filter: blur(0); }
+}
+body.lang-fade {
+  animation: lang-fade 0.45s ease;
+}
+
+/* ============================================================
+   Zertifikate als 3D-Flip-Karten: Klick bzw. Enter/Leertaste
+   dreht die Karte um (bewusst kein Hover-Flip).
+   ============================================================ */
+.flip-card {
+  perspective: 1000px;
+  transition: transform 0.3s ease;
+}
+/* Lift beim Hover: Karte hebt sich an, bekommt Schatten + Akzent-Rahmen (nur Geräte mit Maus) */
+@media (hover: hover) {
+  .flip-card:hover {
+    transform: translateY(-8px);
+  }
+  .flip-card:hover .flip-face {
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.25);
+    border-color: var(--nordic-accent);
+  }
+}
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  overflow-y: auto;
+}
+
+/* ============================================================
+   Underline-Sweep: Akzent-Linie wächst beim Hover von links
+   unter dem Link (statt nur Farbwechsel).
+   ============================================================ */
+.link-sweep {
+  position: relative;
+}
+.link-sweep::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1.5px;
+  border-radius: 9999px;
+  background: var(--nordic-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.link-sweep:hover::after,
+.link-sweep:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ============================================================
+   Terminal-Boot-Sequenz (Preloader): blinkender Cursor und
+   Glitch-Übergang, der den schwarzen Screen "aufbrechen" lässt.
+   ============================================================ */
+@keyframes boot-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.boot-cursor {
+  animation: boot-blink 0.7s steps(1) infinite;
+}
+@keyframes boot-glitch {
+  0%   { clip-path: inset(0); transform: translateX(0); }
+  15%  { clip-path: inset(8% 0 55% 0); transform: translateX(-8px); }
+  30%  { clip-path: inset(45% 0 25% 0); transform: translateX(7px); }
+  45%  { clip-path: inset(15% 0 50% 0); transform: translateX(-5px); filter: invert(1) hue-rotate(90deg); }
+  60%  { clip-path: inset(60% 0 10% 0); transform: translateX(6px); filter: none; }
+  75%  { clip-path: inset(30% 0 45% 0); transform: translateX(-3px); }
+  100% { clip-path: inset(0 0 100% 0); transform: translateX(0); }
+}
+.boot-glitch {
+  animation: boot-glitch 0.38s steps(6, end) forwards;
 }
 
 /* Custom styles for professional timelines and visual features */

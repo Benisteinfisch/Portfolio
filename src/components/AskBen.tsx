@@ -37,6 +37,8 @@ export function AskBen() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
+  // Auf Mobile an den sichtbaren Bereich (Visual Viewport) gekoppelt -> Tastatur-Handling.
+  const [vvStyle, setVvStyle] = useState<{ top: number; height: number } | null>(null);
   const [cooldownUntil, setCooldownUntil] = useState(0);
   const [now, setNow] = useState(() => Date.now());
 
@@ -64,6 +66,44 @@ export function AskBen() {
     };
     document.addEventListener('keydown', onEsc);
     return () => document.removeEventListener('keydown', onEsc);
+  }, [open]);
+
+  // Auf Mobile (Vollbild-Chat) den Hintergrund-Scroll sperren, damit die Seite
+  // dahinter nicht mitscrollt/wackelt. iOS-robust via position:fixed + Scroll-Restore.
+  useEffect(() => {
+    if (!open) return;
+    if (!window.matchMedia('(max-width: 639px)').matches) return;
+    const scrollY = window.scrollY;
+    const body = document.body;
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    return () => {
+      body.style.position = '';
+      body.style.top = '';
+      body.style.left = '';
+      body.style.right = '';
+      window.scrollTo(0, scrollY);
+    };
+  }, [open]);
+
+  // Mobile: Panel exakt an den sichtbaren Bereich koppeln. Geht die Tastatur auf,
+  // schrumpft visualViewport.height -> Fenster passt sich an, kein leerer Bereich,
+  // Eingabe + Fragen bleiben sichtbar.
+  useEffect(() => {
+    const vp = window.visualViewport;
+    if (!open || !vp) return;
+    if (!window.matchMedia('(max-width: 639px)').matches) return;
+    const update = () => setVvStyle({ top: vp.offsetTop, height: vp.height });
+    update();
+    vp.addEventListener('resize', update);
+    vp.addEventListener('scroll', update);
+    return () => {
+      vp.removeEventListener('resize', update);
+      vp.removeEventListener('scroll', update);
+      setVvStyle(null);
+    };
   }, [open]);
 
   // Auto-Scroll ans Ende bei neuen Nachrichten.
@@ -168,6 +208,7 @@ export function AskBen() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={vvStyle ? { top: vvStyle.top, height: vvStyle.height, bottom: 'auto' } : undefined}
             className="fixed z-[55] flex flex-col bg-nordic-surface shadow-2xl overflow-hidden
               inset-0 rounded-none border-0
               sm:inset-auto sm:bottom-24 sm:right-5 sm:w-[370px] sm:h-[540px] sm:max-h-[calc(100vh-9rem)] sm:rounded-2xl sm:border sm:border-border-color"
@@ -191,7 +232,8 @@ export function AskBen() {
             </div>
 
             {/* Nachrichten */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3" aria-live="polite">
+            {/* data-lenis-prevent: Mausrad scrollt hier den Chat, nicht die Seite dahinter */}
+            <div ref={scrollRef} data-lenis-prevent className="flex-1 overflow-y-auto px-4 py-4 space-y-3" aria-live="polite">
               {showIntro && (
                 <div className="flex gap-2">
                   <div className="max-w-[85%] rounded-2xl rounded-tl-sm bg-black/5 dark:bg-white/5 px-3.5 py-2.5 text-sm text-nordic-text leading-relaxed">
@@ -252,7 +294,7 @@ export function AskBen() {
                   disabled={loading || onCooldown}
                   placeholder={onCooldown ? `${a.cooldown} ${cooldownSecs}s…` : a.placeholder}
                   autoComplete="off"
-                  className="flex-1 min-w-0 px-3.5 py-2.5 rounded-xl border border-border-color bg-nordic-surface text-sm text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent focus:ring-2 focus:ring-nordic-accent/30 transition-colors disabled:opacity-60"
+                  className="flex-1 min-w-0 px-3.5 py-2.5 rounded-xl border border-border-color bg-nordic-surface text-base sm:text-sm text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent focus:ring-2 focus:ring-nordic-accent/30 transition-colors disabled:opacity-60"
                 />
                 <button
                   type="submit"

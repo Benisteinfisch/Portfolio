@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Linkedin, ExternalLink, Send, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import { fadeUp, stagger } from '../lib/animations';
 import { useLanguage } from '../lib/i18n';
@@ -170,7 +170,7 @@ export function ContactSection() {
                   value={formState.name}
                   onChange={e => setFormState({ ...formState, name: e.target.value })}
                   placeholder={t.contact.namePlaceholder}
-                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent focus:ring-2 focus:ring-nordic-accent/30 transition-colors duration-300 disabled:opacity-60"
+                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none input-glow disabled:opacity-60"
                 />
               </div>
 
@@ -185,7 +185,7 @@ export function ContactSection() {
                   value={formState.email}
                   onChange={e => setFormState({ ...formState, email: e.target.value })}
                   placeholder={t.contact.emailPlaceholder}
-                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent focus:ring-2 focus:ring-nordic-accent/30 transition-colors duration-300 disabled:opacity-60"
+                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none input-glow disabled:opacity-60"
                 />
               </div>
 
@@ -200,22 +200,51 @@ export function ContactSection() {
                   value={formState.message}
                   onChange={e => setFormState({ ...formState, message: e.target.value })}
                   placeholder={t.contact.messagePlaceholder}
-                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none focus:border-nordic-accent focus:ring-2 focus:ring-nordic-accent/30 transition-colors duration-300 resize-none disabled:opacity-60"
+                  className="w-full px-4 py-3 rounded-xl border border-border-color bg-black/5 dark:bg-white/5 text-nordic-text placeholder-nordic-muted/60 focus:outline-none input-glow resize-none disabled:opacity-60"
                 />
               </div>
 
-              <button
+              {/* Button morpht zwischen Senden / Spinner / gezeichnetem Häkchen */}
+              <motion.button
                 type="submit"
                 disabled={isSubmitting || status === 'success'}
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-nordic-accent hover:bg-nordic-accent-hover disabled:bg-nordic-accent/55 text-white text-sm font-semibold transition-all shadow-sm"
+                animate={{ scale: status === 'success' ? [1, 1.04, 1] : 1 }}
+                transition={{ duration: 0.45, ease: 'easeOut' }}
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-nordic-accent hover:bg-nordic-accent-hover disabled:bg-nordic-accent/55 text-white text-sm font-semibold transition-colors shadow-sm overflow-hidden"
               >
-                {isSubmitting
-                  ? <><Loader2 size={15} className="animate-spin" /><span>{t.contact.submitting}</span></>
-                  : status === 'success'
-                    ? t.contact.submitted
-                    : <><span>{t.contact.submit}</span><Send size={15} /></>
-                }
-              </button>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={status === 'success' ? 'success' : isSubmitting ? 'submitting' : 'idle'}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.18 }}
+                    className="inline-flex items-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <><Loader2 size={15} className="animate-spin" /><span>{t.contact.submitting}</span></>
+                    ) : status === 'success' ? (
+                      <>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                          <motion.path
+                            d="M4 12.5l5 5L20 6.5"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            initial={{ pathLength: 0 }}
+                            animate={{ pathLength: 1 }}
+                            transition={{ duration: 0.4, ease: 'easeOut', delay: 0.1 }}
+                          />
+                        </svg>
+                        <span>{t.contact.submitted}</span>
+                      </>
+                    ) : (
+                      <><span>{t.contact.submit}</span><Send size={15} /></>
+                    )}
+                  </motion.span>
+                </AnimatePresence>
+              </motion.button>
 
               {status === 'success' && (
                 <motion.div

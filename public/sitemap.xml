@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!-- Hash-Routen (#/impressum, #/datenschutz) gehören nicht in die Sitemap:
+     Fragmente werden nie an den Server gesendet und von Crawlern ignoriert. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://adamo.de/ben-vincent/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://adamo.de/ben-vincent/#/impressum</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://adamo.de/ben-vincent/#/datenschutz</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://adamo.de/ben-vincent/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://adamo.de/ben-vincent/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://adamo.de/ben-vincent/" />
   </url>
 </urlset>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, ChevronDown, Github } from 'lucide-react';
 import { fadeUp, stagger } from '../lib/animations';
+import { trackSpotlight } from '../lib/spotlight';
 import { projects, type ProjectCategory } from '../data/projects';
 import { useLanguage } from '../lib/i18n';
 
@@ -110,13 +111,14 @@ export function ProjectsSection() {
                   tabIndex={0}
                   aria-expanded={isExpanded}
                   onClick={() => toggleExpanded(project.id)}
+                  onMouseMove={trackSpotlight}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       toggleExpanded(project.id);
                     }
                   }}
-                  className="w-full md:w-[calc((100%-1.5rem)/2)] cursor-pointer glass-card bg-glass-bg border border-border-color p-6 md:p-8 hover:border-nordic-accent/30 focus-visible:border-nordic-accent focus-visible:outline-none flex flex-col gap-5 transition-all duration-300 group"
+                  className="w-full md:w-[calc((100%-1.5rem)/2)] cursor-pointer glass-card spotlight-card bg-glass-bg border border-border-color p-6 md:p-8 hover:border-nordic-accent/30 focus-visible:border-nordic-accent focus-visible:outline-none flex flex-col gap-5 transition-all duration-300 group"
                 >
                   <div className="flex items-center justify-between">
                     <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${categoryBadgeClass[project.category]}`}>

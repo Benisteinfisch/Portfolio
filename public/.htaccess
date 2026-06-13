@@ -35,6 +35,13 @@
   ExpiresByType font/woff2 "access plus 1 year"
   ExpiresByType image/jpeg "access plus 6 months"
   ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/avif "access plus 6 months"
+  ExpiresByType image/webp "access plus 6 months"
   ExpiresByType image/svg+xml "access plus 6 months"
   ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
+
+# ============================================================
+#  Fehlerseiten (gebrandete 404 statt All-Inkl-Standardseite)
+# ============================================================
+ErrorDocument 404 /ben-vincent/404.html

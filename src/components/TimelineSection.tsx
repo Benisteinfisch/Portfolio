@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 import { stagger } from '../lib/animations';
 import { timelineItems } from '../data/timeline';
@@ -10,6 +10,13 @@ type TimelineFilter = 'all' | 'work' | 'education';
 export function TimelineSection() {
   const { t, language } = useLanguage();
   const [timelineFilter, setTimelineFilter] = useState<TimelineFilter>('all');
+
+  // Scroll-Fortschritt entlang der Timeline: füllt die graue Linie in Akzentfarbe.
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ['start 70%', 'end 55%'],
+  });
 
   const filteredTimeline = timelineItems.filter(
     item => timelineFilter === 'all' || item.type === timelineFilter
@@ -52,8 +59,14 @@ export function TimelineSection() {
           </div>
         </div>
 
-        <div className="relative pl-6 md:pl-0 mt-8">
+        <div ref={timelineRef} className="relative pl-6 md:pl-0 mt-8">
           <div className="absolute left-3 md:left-1/2 top-0 bottom-0 w-0.5 bg-border-color -translate-x-1/2 transition-colors duration-300" />
+          {/* Akzentlinie, die sich beim Scrollen über die graue Basislinie zeichnet */}
+          <motion.div
+            className="absolute left-3 md:left-1/2 top-0 bottom-0 w-0.5 bg-nordic-accent -translate-x-1/2 origin-top"
+            style={{ scaleY: scrollYProgress }}
+            aria-hidden="true"
+          />
 
           <div className="space-y-12">
             <AnimatePresence mode="popLayout">
@@ -68,7 +81,14 @@ export function TimelineSection() {
                     transition={{ duration: 0.4 }}
                     className="relative flex flex-col md:flex-row items-stretch md:justify-between group"
                   >
-                    <div className="absolute left-3 md:left-1/2 -translate-x-1/2 top-6 w-5 h-5 rounded-full bg-nordic-bg border-4 border-border-color group-hover:border-nordic-accent transition-all duration-300 z-10 timeline-dot" />
+                    {/* Dot "zündet" (Akzent-Rand), sobald er die Viewport-Mitte erreicht */}
+                    <motion.div
+                      className="absolute left-3 md:left-1/2 -translate-x-1/2 top-6 w-5 h-5 rounded-full bg-nordic-bg border-4 z-10 timeline-dot"
+                      initial={{ borderColor: 'var(--border-color)' }}
+                      whileInView={{ borderColor: 'var(--nordic-accent)' }}
+                      viewport={{ margin: '-40% 0px -50% 0px' }}
+                      transition={{ duration: 0.35 }}
+                    />
 
                     <div className={`hidden md:flex items-center w-[45%] ${isEven ? 'justify-end text-right' : 'justify-start text-left order-last'}`}>
                       <div className="flex items-center gap-2 text-sm font-semibold text-nordic-accent font-mono">

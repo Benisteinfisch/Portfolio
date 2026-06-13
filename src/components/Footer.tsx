@@ -29,14 +29,14 @@ export function Footer({ onNavigate }: FooterProps) {
           <span className="hidden md:inline text-nordic-muted/40">·</span>
           <button
             onClick={() => onNavigate('impressum')}
-            className="hover:text-nordic-text transition-colors"
+            className="link-sweep hover:text-nordic-text transition-colors"
           >
             {t.footer.impressum}
           </button>
           <span className="hidden md:inline text-nordic-muted/40">·</span>
           <button
             onClick={() => onNavigate('datenschutz')}
-            className="hover:text-nordic-text transition-colors"
+            className="link-sweep hover:text-nordic-text transition-colors"
           >
             {t.footer.datenschutz}
           </button>

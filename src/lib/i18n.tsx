@@ -28,6 +28,10 @@ const META: Record<Lang, { title: string; description: string }> = {
 
 function detectInitialLanguage(): Lang {
   if (typeof window === 'undefined') return 'de';
+  // URL-Parameter hat Vorrang (macht die Sprachversionen direkt verlinkbar —
+  // Grundlage für die hreflang-Alternates in index.html und sitemap.xml).
+  const param = new URLSearchParams(window.location.search).get('lang');
+  if (param === 'de' || param === 'en') return param;
   const saved = localStorage.getItem('language');
   if (saved === 'de' || saved === 'en') return saved;
   const browserLang = navigator.language.toLowerCase();
@@ -44,8 +48,39 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     document.querySelector('meta[name="description"]')?.setAttribute('content', META[language].description);
   }, [language]);
 
+  // Augenzwinkern im Tab-Titel, wenn der Besucher den Tab verlässt.
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      document.title = document.hidden
+        ? language === 'de' ? '👋 Bis gleich — Ben' : '👋 See you soon — Ben'
+        : META[language].title;
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+  }, [language]);
+
+  // Sprachwechsel mit kurzem Blur-Cross-Fade statt hartem Textsprung
+  // (Keyframes .lang-fade in index.css; bei reduced motion harter Wechsel).
+  const switchLanguage = (l: Lang) => {
+    if (l === language) {
+      return;
+    }
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const body = document.body;
+      body.classList.remove('lang-fade');
+      // Reflow erzwingen, damit die Animation auch bei schnellem Doppelklick neu startet
+      void body.offsetWidth;
+      body.classList.add('lang-fade');
+      window.setTimeout(() => body.classList.remove('lang-fade'), 450);
+      // Text erst wechseln, wenn die Seite am unschärfsten ist
+      window.setTimeout(() => setLanguage(l), 120);
+    } else {
+      setLanguage(l);
+    }
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t: translations[language] }}>
+    <LanguageContext.Provider value={{ language, setLanguage: switchLanguage, t: translations[language] }}>
       {children}
     </LanguageContext.Provider>
   );

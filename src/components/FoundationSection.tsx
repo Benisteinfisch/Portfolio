@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, Briefcase, Shield } from 'lucide-react';
 import { fadeUp, stagger } from '../lib/animations';
+import { trackSpotlight } from '../lib/spotlight';
 import { useLanguage } from '../lib/i18n';
 
 const grades: string[] = ['1,0', '1,3', '1,7', '1,7', '1,7', '1,7'];
@@ -39,7 +40,8 @@ export function FoundationSection() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
-            className="glass-card flex flex-col justify-between"
+            onMouseMove={trackSpotlight}
+            className="glass-card spotlight-card flex flex-col justify-between"
           >
             <div>
               <div className="w-12 h-12 bg-accent-light rounded-full flex items-center justify-center mb-6 text-nordic-accent">
@@ -66,7 +68,8 @@ export function FoundationSection() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
-            className="glass-card flex flex-col justify-between"
+            onMouseMove={trackSpotlight}
+            className="glass-card spotlight-card flex flex-col justify-between"
           >
             <div>
               <div className="w-12 h-12 bg-accent-light rounded-full flex items-center justify-center mb-6 text-nordic-accent">
