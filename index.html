@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="de">
   <head>
+    <link rel="preload" href="/ben-vincent/assets/inter-latin-400-normal-C38fXH4l.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/ben-vincent/assets/playfair-display-latin-700-normal-CuDiGg7c.woff2" as="font" type="font/woff2" crossorigin>
+
     <meta charset="UTF-8" />
     <!-- Theme vor dem ersten Paint setzen (verhindert Aufblitzen / FOUC). CSP-Hash steht in .htaccess. -->
     <script>(function(){try{var t=localStorage.getItem('theme')||'system';var d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.add(d?'dark':'light')}catch(e){document.documentElement.classList.add('light')}})();</script>
@@ -12,6 +15,11 @@
     <meta name="description" content="Ben-Vincent Emilio Adamo — Industriekaufmann (IHK) und B.Eng.-Student der IT-Sicherheit. Werkstudent Informationssicherheit bei Hitachi Rail. Schwerpunkte: sichere Netzwerke, ISMS und KRITIS." />
     <meta name="theme-color" content="#4a6b4a" />
     <link rel="canonical" href="https://adamo.de/ben-vincent/" />
+
+    <!-- Sprachversionen (per ?lang=… direkt ansteuerbar, siehe src/lib/i18n.tsx) -->
+    <link rel="alternate" hreflang="de" href="https://adamo.de/ben-vincent/?lang=de" />
+    <link rel="alternate" hreflang="en" href="https://adamo.de/ben-vincent/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://adamo.de/ben-vincent/" />
 
     <!-- Open Graph -->
     <meta property="og:title" content="Ben-Vincent Emilio Adamo — Portfolio" />
@@ -67,8 +75,8 @@
     </script>
 
     <title>Ben-Vincent Adamo — Portfolio</title>
-    <script type="module" crossorigin src="/Portfolio/assets/index-6CiqGzDo.js"></script>
-    <link rel="stylesheet" crossorigin href="/Portfolio/assets/index-yhuYlVY1.css">
+    <script type="module" crossorigin src="/Portfolio/assets/index-BLqKYFtc.js"></script>
+    <link rel="stylesheet" crossorigin href="/Portfolio/assets/index-U-91IFRN.css">
   </head>
   <body>
     <div id="root"></div>

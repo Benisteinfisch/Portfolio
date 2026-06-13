@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>404 — Seite nicht gefunden | Ben-Vincent Adamo</title>
+    <link rel="icon" type="image/svg+xml" href="/ben-vincent/favicon.svg" />
+    <!-- Bewusst ohne JavaScript: funktioniert unter der strikten CSP aus .htaccess
+         (script-src erlaubt nur 'self' + den Theme-Hash der Hauptseite). -->
+    <style>
+      :root {
+        --bg: #f6f5f2;
+        --text: #2e3440;
+        --muted: #6b7280;
+        --accent: #4a6b4a;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #22262e;
+          --text: #e5e9f0;
+          --muted: #9ca3af;
+          --accent: #7fa57f;
+        }
+      }
+      * { margin: 0; box-sizing: border-box; }
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+        text-align: center;
+        padding: 2rem;
+      }
+      .code {
+        font-size: 5rem;
+        font-weight: 700;
+        color: var(--accent);
+        font-family: Georgia, 'Times New Roman', serif;
+        line-height: 1;
+      }
+      h1 { font-size: 1.5rem; margin: 1rem 0 0.5rem; }
+      p { color: var(--muted); max-width: 28rem; margin: 0 auto; line-height: 1.6; }
+      a.btn {
+        display: inline-block;
+        margin-top: 1.75rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 9999px;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="code">404</div>
+      <h1>Seite nicht gefunden / Page not found</h1>
+      <p>
+        Diese Seite existiert nicht (mehr).<br />
+        This page doesn&rsquo;t exist (anymore).
+      </p>
+      <a class="btn" href="/ben-vincent/">Zur Startseite / Back to home</a>
+    </main>
+  </body>
+</html>
