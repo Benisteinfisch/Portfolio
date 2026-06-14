@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useReducedMotion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useReducedMotion, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowRight, ChevronDown, Briefcase, GraduationCap, Award } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import type { ReactNode, MouseEvent } from 'react';
@@ -37,9 +37,6 @@ export function HeroSection() {
     // Bild war schon im Cache -> onLoad feuert nicht mehr.
     if (imgRef.current?.complete) setPhotoLoaded(true);
   }, []);
-  const { scrollYProgress } = useScroll();
-  const yRaw = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const y = prefersReducedMotion ? '0%' : yRaw;
   const { t, language } = useLanguage();
   const s = t.hero.status;
 
@@ -70,18 +67,6 @@ export function HeroSection() {
 
   return (
     <section id="profil" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 transition-colors duration-300">
-      {/* Aurora: zwei langsam driftende Farbflecken (Keyframes + Farben in index.css) */}
-      <motion.div className="absolute inset-0 z-0 pointer-events-none" style={{ y }} aria-hidden="true">
-        <div
-          className="aurora-blob w-[55vw] h-[55vw] max-w-[700px] max-h-[700px] left-[5%] top-[2%]"
-          style={{ background: 'var(--aurora-1)', animation: 'aurora-a 18s ease-in-out infinite' }}
-        />
-        <div
-          className="aurora-blob w-[48vw] h-[48vw] max-w-[600px] max-h-[600px] right-[2%] bottom-[8%]"
-          style={{ background: 'var(--aurora-2)', animation: 'aurora-b 22s ease-in-out infinite' }}
-        />
-      </motion.div>
-
       <div className="section-container relative z-10 w-full max-w-4xl mx-auto">
         <motion.div
           initial="hidden"

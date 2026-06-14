@@ -1,12 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValue,
-  useSpring,
-  useReducedMotion,
-} from 'framer-motion';
+import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 
 /**
  * "Isometric Cyber-Surface" — der Blick fällt schräg auf eine riesige, gekippte
@@ -15,42 +8,27 @@ import {
  *
  * Layer (hinten → vorne, alle in Screen-Space außer der gekippten Bühne):
  *   1. Grundfarbe (scheint durch die Fugen, wenn dort kein Licht ist)
- *   2. Energiequelle (groß) — wandert mit dem Scroll auf Y
- *   3. Maus-Energie — folgt gefedert dem Cursor, glüht durch die Fugen am Cursor
+ *   2. Grund-Energie (groß, STATISCH) — nur ein Hauch Atmosphäre
+ *   3. Maus-Spotlight — folgt gefedert dem Cursor, glüht durch die Fugen am Cursor
  *   4. Isometrische Bühne mit dem Kachel-Grid (statisch, transparente Fugen)
- *   5. Maus-Sheen — heller Schein ÜBER den Kacheln, lässt die Oberfläche unter
- *      dem Cursor aufleuchten (screen-blend)
  *
- * Performance: Nur die Licht-Layer (2,3,5) werden transformiert. Die ~800 Kacheln
- * sind statisch und werden einmal gepaintet. Maus nur bei pointer:fine.
+ * Performance: Der Hintergrund ist beim SCROLLEN komplett statisch — sonst würde
+ * jede Bewegung den Cache aller backdrop-filter-Flächen (Glass-Cards) pro Frame
+ * ungültig machen. Nur das Maus-Spotlight bewegt sich (und nur bei Mausbewegung,
+ * nicht beim Scrollen). Kacheln statisch, Maus nur bei pointer:fine.
  */
 export function EnergyMatrixBackground() {
   const prefersReducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
 
   // Kachelanzahl pro Achse: weniger auf Mobile (Performance + Lesbarkeit).
-  const [gridN, setGridN] = useState(28);
+  const [gridN, setGridN] = useState(20);
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)');
-    const apply = () => setGridN(mq.matches ? 16 : 28);
+    const apply = () => setGridN(mq.matches ? 12 : 20);
     apply();
     mq.addEventListener('change', apply);
     return () => mq.removeEventListener('change', apply);
   }, []);
-
-  // Reisehöhe der Energiequelle: an die Fensterhöhe gekoppelt.
-  const [travel, setTravel] = useState(() =>
-    typeof window !== 'undefined' ? window.innerHeight * 0.4 : 300
-  );
-  useEffect(() => {
-    const onResize = () => setTravel(window.innerHeight * 0.4);
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
-
-  // Scroll-gekoppelte Y-Wanderung der Energiequelle.
-  const scrollYRaw = useTransform(scrollYProgress, [0, 1], [-travel, travel]);
-  const scrollY = useSpring(scrollYRaw, { stiffness: 50, damping: 25 });
 
   // Maus-Position (px relativ zur Bildschirmmitte), gefedert.
   const mouseX = useMotionValue(0);
@@ -76,19 +54,17 @@ export function EnergyMatrixBackground() {
   return (
     <div
       className="energy-matrix fixed inset-0 pointer-events-none overflow-hidden"
-      style={{ zIndex: -1 }}
+      style={{ zIndex: -1, contain: 'strict' }}
       aria-hidden="true"
     >
       {/* 1. Grundfarbe */}
       <div className="absolute inset-0" style={{ backgroundColor: 'var(--matrix-groove)' }} />
 
-      {/* 2. Grund-Energie (scrollt) — im Idle bewusst sehr schwach, damit die
-           Seite primär dunkel wirkt; nur ein Hauch Atmosphäre. */}
-      <motion.div
+      {/* 2. Grund-Energie (STATISCH) — bewusst sehr schwach, damit die Seite
+           primär dunkel wirkt; verändert sich beim Scrollen NICHT (Cache-freundlich). */}
+      <div
         className="absolute inset-0"
         style={{
-          y: prefersReducedMotion ? 0 : scrollY,
-          willChange: 'transform',
           background:
             'radial-gradient(70vw 70vh at 50% 45%, rgba(var(--matrix-accent-rgb), 0.06), transparent 70%)',
         }}
